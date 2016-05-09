@@ -28,6 +28,19 @@ srcversion='$MirOS: src/bin/mksh/Build.sh,v 1.697 2016/03/04 18:28:39 tg Exp $'
 LC_ALL=C
 export LC_ALL
 
+HARVEYBIN=${HARVEY}/${ARCH}/bin
+HARVEYLIB=${HARVEY}/${ARCH}/lib
+APEXLIB=${APEX}/${ARCH}/lib
+APEXBIN=${APEX}/${ARCH}/bin
+
+export CFLAGS="-std=c11 -fasm -ffreestanding -fno-builtin -nostdinc -nostdlib -fno-omit-frame-pointer -I${APEX}/${ARCH}/include -I${APEX}/include -I${HARVEY}/sys/include -g -gdwarf-2 -ggdb -mno-red-zone -O2 -static -D_SUSV2_SOURCE -D_POSIX_SOURCE -D_LIMITS_EXTENSION -D_BSD_EXTENSION -DHARVEY -D_GNU_SOURCE"
+
+export LDFLAGS="-static ${APEXLIB}/crt1.o ${APEXLIB}/crti.o ${APEXLIB}/crtn.o -L${APEXLIB} -L${HARVEYLIB}"
+
+export LIBS="-lap -lc"
+
+export TARGET_OS="Harvey"
+
 case $ZSH_VERSION:$VERSION in
 :zsh*) ZSH_VERSION=2 ;;
 esac
@@ -870,17 +883,13 @@ Plan9)
 	add_cppflags -DMKSH_MAYBE_KENCC
 	;;
 Harvey)
-	add_cppflags -D_POSIX_SOURCE
-	add_cppflags -D_LIMITS_EXTENSION
-	add_cppflags -D_BSD_EXTENSION
-	add_cppflags -D_SUSV2_SOURCE
-	add_cppflags -DMKSH_ASSUME_UTF8; HAVE_ISSET_MKSH_ASSUME_UTF8=1
-	add_cppflags -DMKSH_NO_CMDLINE_EDITING
-	add_cppflags -DMKSH__NO_SETEUGID
-	oswarn=' and will currently not work'
-	add_cppflags -DMKSH_UNEMPLOYED
-	# this is for detecting kencc
-	add_cppflags -DMKSH_MAYBE_KENCC
+        add_cppflags -DMKSH_ASSUME_UTF8; HAVE_ISSET_MKSH_ASSUME_UTF8=1
+        add_cppflags -DMKSH_NO_CMDLINE_EDITING
+        add_cppflags -DMKSH__NO_SETEUGID
+        oswarn=' and will currently not work'
+        add_cppflags -DMKSH_UNEMPLOYED
+	add_cppflags -DMKSH_NOPROSPECTOFWORK
+	: "${CC=gcc}"
 	;;
 PW32*)
 	HAVE_SIG_T=0	# incompatible
@@ -1431,9 +1440,9 @@ gcc)
 	NOWARN=$DOWARN; phase=u
 	ac_flags 1 wnodeprecateddecls -Wno-deprecated-declarations
 	# mksh is not written in CFrustFrust!
-	ac_flags 1 no_eh_frame -fno-asynchronous-unwind-tables
-	ac_flags 1 fnostrictaliasing -fno-strict-aliasing
-	ac_flags 1 fstackprotectorstrong -fstack-protector-strong
+	# ac_flags 1 no_eh_frame -fno-asynchronous-unwind-tables
+	# ac_flags 1 fnostrictaliasing -fno-strict-aliasing
+	# ac_flags 1 fstackprotectorstrong -fstack-protector-strong
 	test 1 = $HAVE_CAN_FSTACKPROTECTORSTRONG || \
 	    ac_flags 1 fstackprotectorall -fstack-protector-all
 	test $cm = dragonegg && case " $CC $CFLAGS $LDFLAGS " in
