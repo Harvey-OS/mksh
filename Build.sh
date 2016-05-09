@@ -869,6 +869,19 @@ Plan9)
 	# this is for detecting kencc
 	add_cppflags -DMKSH_MAYBE_KENCC
 	;;
+Harvey)
+	add_cppflags -D_POSIX_SOURCE
+	add_cppflags -D_LIMITS_EXTENSION
+	add_cppflags -D_BSD_EXTENSION
+	add_cppflags -D_SUSV2_SOURCE
+	add_cppflags -DMKSH_ASSUME_UTF8; HAVE_ISSET_MKSH_ASSUME_UTF8=1
+	add_cppflags -DMKSH_NO_CMDLINE_EDITING
+	add_cppflags -DMKSH__NO_SETEUGID
+	oswarn=' and will currently not work'
+	add_cppflags -DMKSH_UNEMPLOYED
+	# this is for detecting kencc
+	add_cppflags -DMKSH_MAYBE_KENCC
+	;;
 PW32*)
 	HAVE_SIG_T=0	# incompatible
 	oswarn=' and will currently not work'

@@ -1,0 +1,29 @@
+#APEX_PATH = path where you have apex repo cloned
+#ARCH = your arch
+#HARVEY = path where you have Harvey repo cloned
+
+CFLAGS=-nostdinc \
+	-O0 \
+	-mno-red-zone \
+	-ffreestanding \
+	-fno-builtin \
+	-trigraphs \
+	-Wall \
+	-Wno-missing-braces \
+	-Wno-parentheses \
+	-Wno-unknown-pragmas \
+	-Wuninitialized \
+	-Wmaybe-uninitialized \
+	-I $(APE_PATH)/$(ARCH)/include \
+	-I$(APE_PATH)/sys/include
+
+LDFLAGS=-nostdlib \
+	$(APE_PATH)/$(ARCH)/lib/crt1.o \
+	$(APE_PATH)/$(ARCH)/lib/crti.o \
+	$(APE_PATH)/$(ARCH)/lib/crtn.o \
+	-L $(APE_PATH)/$(ARCH)/lib \
+	-L $(HARVEY)/$(ARCH)/lib \
+	-lbsd -lap -lc
+
+all:
+	TARGET_OS=Harvey sh Build.sh
