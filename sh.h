@@ -745,6 +745,10 @@ enum sh_flag {
  *
  * note that kshlongjmp MUST NOT be passed 0 as second argument!
  */
+#ifdef HARVEY
+#define _setjmp(jbuf) setjmp(jbuf)
+#define _longjmp longjmp
+#endif
 #ifdef MKSH_NO_SIGSETJMP
 #define kshjmp_buf	jmp_buf
 #define kshsetjmp(jbuf)	_setjmp(jbuf)
