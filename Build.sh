@@ -883,12 +883,11 @@ Plan9)
 	add_cppflags -DMKSH_MAYBE_KENCC
 	;;
 Harvey)
-        add_cppflags -DMKSH_ASSUME_UTF8; HAVE_ISSET_MKSH_ASSUME_UTF8=1
-        add_cppflags -DMKSH_NO_CMDLINE_EDITING
-        add_cppflags -DMKSH__NO_SETEUGID
-        oswarn=' and will currently not work'
-        add_cppflags -DMKSH_UNEMPLOYED
-	add_cppflags -DMKSH_NOPROSPECTOFWORK
+	add_cppflags -DMKSH_ASSUME_UTF8; HAVE_ISSET_MKSH_ASSUME_UTF8=1
+	add_cppflags -DMKSH_NO_CMDLINE_EDITING
+	add_cppflags -DMKSH__NO_SETEUGID
+	oswarn=' and will currently not work'
+	add_cppflags -DMKSH_UNEMPLOYED
 	: "${CC=gcc}"
 	;;
 PW32*)
