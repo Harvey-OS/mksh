@@ -888,6 +888,7 @@ Harvey)
 	add_cppflags -DMKSH__NO_SETEUGID
 	oswarn=' and will currently not work'
 	add_cppflags -DMKSH_UNEMPLOYED
+	add_cppflags -DMKSH_NOPROSPECTOFWORK
 	: "${CC=gcc}"
 	;;
 PW32*)
